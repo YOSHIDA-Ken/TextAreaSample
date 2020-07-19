@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>HTML 5 complete</title>
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<![endif]-->
+<style>
+  article, aside, dialog, figure, footer, header,
+  hgroup, menu, nav, section { display: block; }
+</style>
+</head>
+<body>
+<p>Hello World</p>
+<div class="editor">
+    <textarea id="editor"></textarea>
+    <span id="counter">0</span>
+</div>
+<div class="editor">
+    <textarea id="editor"></textarea>
+    <span id="counter">0</span>
+</div>
+<div class="editor">
+    <textarea id="editor"></textarea>
+    <span id="counter">0</span>
+</div>
+<div class="editor">
+    <textarea id="editor"></textarea>
+    <span id="counter">0</span>
+</div>
+<div class="editor">
+    <textarea id="editor"></textarea>
+    <span id="counter">0</span>
+</div>
+<a href="#" id="download">download</a>
+<script type="text/JavaScript">
+(function(){
+    let getStringFromDate = () => {
+        var date = new Date();
+
+        var year_str = date.getFullYear();
+        var month_str = 1 + date.getMonth();
+        var day_str = date.getDate();
+        var hour_str = date.getHours();
+        var minute_str = date.getMinutes();
+        var second_str = date.getSeconds();
+        
+        month_str = ('0' + month_str).slice(-2);
+        day_str = ('0' + day_str).slice(-2);
+        hour_str = ('0' + hour_str).slice(-2);
+        minute_str = ('0' + minute_str).slice(-2);
+        second_str = ('0' + second_str).slice(-2);
+        
+        format_str = 'YYYYMMDDhhmmss';
+        format_str = format_str.replace(/YYYY/g, year_str);
+        format_str = format_str.replace(/MM/g, month_str);
+        format_str = format_str.replace(/DD/g, day_str);
+        format_str = format_str.replace(/hh/g, hour_str);
+        format_str = format_str.replace(/mm/g, minute_str);
+        format_str = format_str.replace(/ss/g, second_str);
+        
+        return format_str;
+    };
+
+    let download_button = document.querySelector('#download');
+    download_button.addEventListener("click", (event) => {
+        console.log("click");
+
+        let editor = document.querySelectorAll('.editor');
+        var text = "";
+        editor.forEach(element => {
+            let editor = element.querySelector('#editor');
+            text = text + editor.value + "\n";
+        });
+
+        let blob = new Blob([text],{type:"text/plan"});
+        let link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = getStringFromDate() + '.txt';
+        link.click();
+    });
+    
+    let editor = document.querySelectorAll('.editor');
+    editor.forEach(element => {
+        let editor = element.querySelector('#editor');
+        editor.addEventListener('input',(event) => {
+            let counter = element.querySelector('#counter');
+            counter.innerHTML = event.target.value.length;
+        });
+    });
+})();
+</script>
+</body>
+</html>
